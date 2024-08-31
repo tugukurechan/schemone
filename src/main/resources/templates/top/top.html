@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トップ</title>
+</head>
+<body>
+    <h1>トップページ - リンク: [[${randomLink}]]</h1>
+    <form action="#" th:action="@{/usr/add}" th:method="post">
+        <input type="text" name="userName" placeholder="ユーザ名" required />
+        <button type="submit">ユーザを追加</button>
+    </form>
+    <!-- 他のコンテンツ -->
+</body>
+</html>
