@@ -19,4 +19,12 @@ public class UserService {
     public User load(Integer id){
         return userRepository.load(id);
     }
+
+    public User save(User user){
+        return userRepository.save(user);
+    }
+
+    public void deleteById(Integer id){
+        userRepository.deleteById(id);
+    }
 }
