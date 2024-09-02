@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -18,7 +17,7 @@ import java.util.Base64;
  */
 @Controller
 @RequestMapping("/")
-public class LinkController {
+public class GroupController {
 
     @GetMapping
     public RedirectView redrectToRandomLink() {
@@ -34,9 +33,9 @@ public class LinkController {
     }
 
     @GetMapping("/{randomLink}/top")
-    public ModelAndView showTopPage(@PathVariable("randomLink") String randomLink){
+    public ModelAndView showTopPage(@PathVariable("randomLink") String randomLink) {
         ModelAndView modelAndView = new ModelAndView("top/top");
-        modelAndView.addObject("randomLink",randomLink);
+        modelAndView.addObject("randomLink", randomLink);
         // 必要な処理はここより下
         return modelAndView;
     }

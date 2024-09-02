@@ -12,21 +12,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
-/**
- * userのドメインクラス.
- *
- * @author tuguk
- */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
-public class User {
+@Table(name = "debts")
+public class Debt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -36,8 +30,8 @@ public class User {
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
 
     @Column(name = "created_at")
     @CreatedDate
@@ -49,15 +43,16 @@ public class User {
 
     // ここから外部
 
-    @OneToMany(mappedBy = "paidUser")
-    private List<Event> paidEventList;
+    @ManyToOne
+    @JoinColumn(name = "creditor_id", nullable = false)
+    private User creditor;
 
-    @OneToMany(mappedBy = "eventInsteadUser")
-    private List<EventInsteadUser> eventInsteadUserList;
+    @ManyToOne
+    @JoinColumn(name = "debtor_id", nullable = false)
+    private User debtor;
 
-    @OneToMany(mappedBy = "creditor")
-    private List<Debt> debtsAsCreditor;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
-    @OneToMany(mappedBy = "debtor")
-    private List<Debt> debtAsDebtor;
 }

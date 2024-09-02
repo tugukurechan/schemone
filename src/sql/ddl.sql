@@ -1,8 +1,8 @@
-DROP TABLE if EXISTS links;
+DROP TABLE if EXISTS groups;
 -- リンクを管理する
 CREATE TABLE groups (
     id text PRIMARY KEY,
-    name text NOT NULL,
+    group_name text NOT NULL,
     -- all_money INTEGER DEFAULT 0
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, --作成日時
@@ -14,7 +14,10 @@ DROP TABLE if EXISTS users;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     group_id text REFERENCES groups(id),
-    name text NOT NULL
+    user_name text NOT NULL
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, --作成日時
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP --更新日時
 );
 
 DROP TABLE if EXISTS events;
@@ -38,7 +41,10 @@ CREATE TABLE event_instead_users (
     id SERIAL PRIMARY KEY,
     group_id text REFERENCES groups(id),
     event_id INTEGER REFERENCES events(id),
-    user_id INTEGER REFERENCES users(id)
+    user_id INTEGER REFERENCES users(id),
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, --作成日時
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP --更新日時
 );
 
 DROP TABLE if EXISTS debts;
@@ -54,17 +60,6 @@ CREATE TABLE debts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- DROP TABLE if EXISTS final_debts;
--- -- ユーザの最終的な借金を管理する
--- CREATE TABLE final_debts (
---     id SERIAL PRIMARY KEY,
---     creditor_id INTEGER REFERENCES users(id),  -- 立て替えた人のID
---     debtor_id INTEGER REFERENCES users(id),    -- 借りた人のID
---     final_amount INTEGER NOT NULL,      -- 最終的な精算金額
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
 
 -- 1イベントの作成:
 -- 新しいイベントが作成され、events テーブルに保存されます。

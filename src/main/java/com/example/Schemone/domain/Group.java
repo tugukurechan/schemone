@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * userのドメインクラス.
+ * groupのドメインクラス.
  *
  * @author tuguk
  */
@@ -25,19 +25,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
-public class User {
+@Table(name = "groups")
+public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private Integer id;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
-
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(name = "group_name", nullable = false)
+    private String name;
 
     @Column(name = "created_at")
     @CreatedDate
@@ -47,17 +42,17 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    // ここから外部
+    //ここから外部
 
-    @OneToMany(mappedBy = "paidUser")
-    private List<Event> paidEventList;
+    @OneToMany(mappedBy = "group")
+    private List<User> userList;
 
-    @OneToMany(mappedBy = "eventInsteadUser")
+    @OneToMany(mappedBy = "group")
+    private List<EventInsteadUser> eventList;
+
+    @OneToMany(mappedBy = "group")
     private List<EventInsteadUser> eventInsteadUserList;
 
-    @OneToMany(mappedBy = "creditor")
-    private List<Debt> debtsAsCreditor;
-
-    @OneToMany(mappedBy = "debtor")
-    private List<Debt> debtAsDebtor;
+    @OneToMany(mappedBy = "group")
+    private List<Debt> debtList;
 }
